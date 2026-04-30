@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Sleep Calculator</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+
+<h2>🌙 Sleep Calculator</h2>
+
+<input type="time" id="wakeTime">
+<br><br>
+<button onclick="calculate()">Calculate</button>
+
+<p id="result"></p>
+
+<script>
+function calculate() {
+  let time = document.getElementById("wakeTime").value;
+
+  if (!time) {
+    document.getElementById("result").innerHTML = "Please enter time";
+    return;
+  }
+
+  let [hour, minute] = time.split(":");
+
+  let wakeDate = new Date();
+  wakeDate.setHours(hour);
+  wakeDate.setMinutes(minute);
+
+  let result = "<b>Best sleep times:</b><br>";
+
+  for (let i = 6; i >= 4; i--) {
+    let sleepTime = new Date(wakeDate.getTime() - (i * 90 + 15) * 60000);
+    result += sleepTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + "<br>";
+  }
+
+  document.getElementById("result").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
