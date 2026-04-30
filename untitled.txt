@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sleep Calculator</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  color: white;
+  text-align: center;
+  padding: 50px;
+}
+
+.container {
+  background: rgba(0,0,0,0.3);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+
+input, button {
+  padding: 10px;
+  margin-top: 10px;
+  width: 80%;
+  border: none;
+  border-radius: 8px;
+}
+
+button {
+  background: #ffcc00;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #ffaa00;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🌙 Sleep Calculator</h2>
+  <p>Enter your wake-up time:</p>
+
+  <input type="time" id="wakeTime">
+  <br>
+  <button onclick="calculateSleep()">Calculate</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+function calculateSleep() {
+  let time = document.getElementById("wakeTime").value;
+
+  if (!time) {
+    document.getElementById("result").innerHTML = "Please enter a time!";
+    return;
+  }
+
+  let [hour, minute] = time.split(":");
+
+  let wakeDate = new Date();
+  wakeDate.setHours(hour);
+  wakeDate.setMinutes(minute);
+
+  let output = "<b>Best times to sleep:</b><br><br>";
+
+  for (let i = 6; i >= 4; i--) {
+    let sleepTime = new Date(wakeDate.getTime() - (i * 90 + 15) * 60000);
+    output += "🕒 " + sleepTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + "<br>";
+  }
+
+  document.getElementById("result").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
